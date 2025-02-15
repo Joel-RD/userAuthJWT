@@ -1,12 +1,10 @@
 import bcrypt from "bcrypt";
 
 const saltRounds = 15;
-const myPassword = "@Eudyjoel23";
-const otherPassword = "@Eudyjoel23";
 
 export const hashgenerator = async (password) => {
   try {
-    const hash = await bcrypt.hash(myPassword, saltRounds);
+    const hash = await bcrypt.hash(password, saltRounds);
     return hash;
   } catch (error) {
     console.error(error);
@@ -22,10 +20,3 @@ export const comparePassword = async (password, hash) => {
   }
 };
 
-// ✅ Verificar si la contraseña es la misma
-// (async () => {
-//   const hash = await hashgenerator();
-//   if (hash) {
-//     console.log(await comparePassword(otherPassword, hash));
-//   }
-// })();

@@ -1,7 +1,22 @@
-  <h1>Private Page</h1>
+<section class="page-container">
+  <header class="page-header">
+    <h1 class="app-title">Mi Aplicación Segura</h1>
 
-  
-  <form action="/logout" method="post">
-    <button class="btn solid" type="submit">Logout</button>
-  </form>
+    <div class="user-actions">
+      <form action="/logout" method="post">
+        <button id="logout-button" type="submit">Cerrar seccion</button>
+      </form>
 
+      <button id="config-button" type="submit">
+        <a href="/protected/config">Configuración</a>
+      </button>
+    </div>
+  </header>
+  <main class="protected-content">
+    <h2 class="welcome-message">Bienvenido a tu área protegida</h2>
+    <p class="info-text">Esta es una página que solo deberías poder ver si estás
+      autenticado.</p>
+    <p class="info-text">Aquí puedes mostrar información sensible o
+      funcionalidades exclusivas para usuarios registrados.</p>
+  </main>
+</section>

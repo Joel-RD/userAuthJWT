@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 export const validationData = {
   validateName: function (name) {
     const nameRegex = /^[A-Z][a-z]*( [A-Z][a-z]*)*$/;
@@ -8,7 +10,9 @@ export const validationData = {
       name === null ||
       !isNaN(name)
     ) {
-      throw new Error("Nombre inválido: Debe comenzar con una letra mayúscula y seguir con letras minúsculas");
+      throw new Error(
+        "Nombre: Debe comenzar con una letra mayúscula y seguir con letras minúsculas"
+      );
     }
     return name;
   },
@@ -22,7 +26,9 @@ export const validationData = {
       email === null ||
       !isNaN(email)
     ) {
-      throw new Error("Email inválido: Debe ser Gmail, Hotmail o Outlook (ejemplo@gmail.com, ejemplo@hotmail, ejemplo@outlook)");
+      throw new Error(
+        "Email: Debe ser Gmail, Hotmail o Outlook (ejemplo@gmail.com, ejemplo@hotmail, ejemplo@outlook)"
+      );
     }
     return email;
   },
@@ -38,12 +44,14 @@ export const validationData = {
       password === NaN
     ) {
       throw new Error(
-        "Contraseña inválida. Debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial."
+        "Contraseña: Debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial."
       );
     }
     return password;
   },
 };
+
+const {SECRET_JWT_KEY} = process.env;
 
 export const verifyToken = (req, res, next) => {
   try {
@@ -52,9 +60,13 @@ export const verifyToken = (req, res, next) => {
       res.redirect("/home").status(401); // No autorizado
       return;
     }
+
+    const decode = jwt.verify(token, SECRET_JWT_KEY);
+    req.session = decode;
+    res.locals.user = decode;
+
     next();
   } catch (error) {
     console.error(error);
   }
-}
-
+};

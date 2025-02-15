@@ -1,0 +1,91 @@
+<section class="config-account">
+  <div class="config-container">
+    <h2 class="config-title">Configuración de Cuenta</h2>
+
+    <form id="set-config" action="" class="sign-in-form">
+      <div>
+        <label for="nombre" class="config-label">Nuevo Nombre:</label>
+        <input
+          type="text"
+          id="new-name_config"
+          name="nombre"
+          class="config-input"
+          placeholder="Ingrese su nuevo nombre"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="password" class="config-label">Nueva Contraseña:</label>
+        <input
+          type="password"
+          id="new-password_config"
+          name="password"
+          class="config-input"
+          placeholder="Ingrese su nueva contraseña"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial."
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <input type="submit" class="config-button" value="Guardar Cambios" />
+    </form>
+      <p id="message-config"></p>
+  </div>
+</section>
+
+<script>
+    const setAccount = document.getElementById("set-config");
+const messageSetConfig = document.getElementById("message-config");
+
+    setAccount.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const new_name = document.getElementById("new-name_config").value;
+  const new_password = document.getElementById("new-password_config").value;
+
+  try {
+    const res = await fetch(`/protected/set-config`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ new_name, new_password }),
+    });
+
+    const responseData = await res.text();
+
+    if (res.status === 500) {
+      messageSetConfig.innerHTML = "Error al guardar los cambios, intente nuevamente";
+      messageSetConfig.style.color = "red";
+      document.getElementById("new-name_config").value = "";
+      document.getElementById("new-password_config").value = "";
+      return 
+    }
+
+    if (!res.ok) {
+      messageSetConfig.innerHTML = responseData;
+      messageSetConfig.style.color = "red";
+      document.getElementById("new-name_config").value = "";
+      document.getElementById("new-password_config").value = "";
+
+      if (res.status === 5000 ) {
+        messageSetConfig.innerHTML = "Error al guardar los cambios";
+        return 
+      document.getElementById("new-name_config").value = "";
+      document.getElementById("new-password_config").value = "";
+      }
+    } else {
+      messageSetConfig.innerHTML = responseData;
+      messageSetConfig.style.color = "green";
+      document.getElementById("new-name_config").value = "";
+      document.getElementById("new-password_config").value = "";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    messageSignIn.innerHTML = "Something went wrong. Please try again.";
+    messageSignIn.style.color = "red";
+  }
+});
+</script>

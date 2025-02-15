@@ -1,17 +1,15 @@
 import { Router } from "express";
-import jwt from "jsonwebtoken";
 import { verifyToken } from "../../utils/validation.js";
-import path from "node:path";
+import { rootConfig, setConfig, rootProtected } from "../../controller/private.controller.js";
+
 
 const router = Router();
 
-const { SECRET_JWT_KEY } = process.env;
+router.get("/protected", verifyToken, rootProtected);
 
-router.get("/protected", verifyToken, (req, res) => {
-  const token = req.cookies.access_token;
-  const data = jwt.verify(token, SECRET_JWT_KEY);
+router.get("/protected/config", verifyToken, rootConfig);
 
-  res.render("private.handlebars");
-});
+router.post("/protected/set-config", verifyToken, setConfig);
 
 export default router;
+

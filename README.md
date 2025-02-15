@@ -1,4 +1,4 @@
-# 🔺Auntenticacíon con JWT
+# 🔺Auntenticacíon con JWT Usando el Patron MVC
 
 > ### API REST para el desarrollo de un proyecto de auntenticación con JWT
 >
@@ -39,10 +39,16 @@ El front-end que utilicé proviene de su proyecto [ SignIn-SignUp-Form](https://
 
 ## ✅ Instalación de dependencias
 
-Para instalar un paquete, usa el comando
+Para instalar todas las dependencias usa el comando:
 
 ```bash
   npm install
+```
+
+Seguido del siguiente comando para actualizar las dependencias:
+
+```bash
+  npm update
 ```
 
 ## 📝 Crear la base de datos
@@ -83,18 +89,25 @@ Para instalar un paquete, usa el comando
     email VARCHAR(255) UNIQUE NOT NULL,
 ```
 
-## 🚀 Ejecutar la API
+## 🚀 Ejecutar la API en modo desarrollador.
 
 ```bash
   npm run dev
 ```
 
+## 🚀 Ejecutar la API para prodproducción.
+
+```bash
+  npm run build
+```
+
 ### 🌐 Rutas de la API
 
-- **GET /:** Muestra el panel de inicio de sección y registra un nuevo usuario.
+- **GET /:** Muestra el panel de inicio de sección y registro de un nuevo usuario.
 - **POST /login**: Inicio de sesión.
 - **POST /register**: Registro de un nuevo usuario.
 - **POST /protected**: Ruta protegida (Solo usarios logeados pueden acceder).
+- **POST /protected/set-config**: Configuración de cuenta (nuevo usuario y nuevo password).
 - **POST /logout**: Cierre de sesión.
 
 ## 🎉 ¡Gracias por utilizar la API!

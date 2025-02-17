@@ -27,6 +27,10 @@ app.set('views', path.join(process.cwd(), 'src', 'views'));
 
 app.use(publics, auth, privateRouter);
 
+app.all("*", (req, res) => {
+  res.redirect("/home");
+});
+
 app.listen(PORT_SERVER, () => {
   console.log(`Server running on port http://localhost:${PORT_SERVER}/home`);
 });

@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-const {PORT_SERVER} = process.env;
+const PORT_SERVER = process.env.PORT_SERVER || 6352;
 
 //Middlewares
 app.use(logger("dev"));

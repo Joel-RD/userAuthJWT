@@ -3,10 +3,11 @@ import { executeQuery } from "../models/DB.js";
 import { hashgenerator, comparePassword } from "../utils/encrypt.js";
 import { validationData } from "../utils/validation.js";
 import jwt from "jsonwebtoken";
+import { config } from "../../config.js";
 
 const router = Router();
 
-const { SECRET_JWT_KEY } = process.env;
+const {SECRET_TOKEN, console_log} = config();
 
 export const register = async (req, res) => {
   try {
@@ -52,7 +53,7 @@ export const register = async (req, res) => {
 
     res.send("Usuario registrado correctamente").status(200);
   } catch (error) {
-    console.error(error);
+    console_log(error);
     res.status(400).json({ message: "Error al registrar usuario" });
   }
 };
@@ -93,7 +94,7 @@ export const login = async (req, res) => {
 
     const token = jwt.sign(
       { userName: result.rows[0].username, userEmail: result.rows[0].email },
-      SECRET_JWT_KEY,
+      SECRET_TOKEN,
       {
         expiresIn: "1h",
       }
@@ -108,7 +109,7 @@ export const login = async (req, res) => {
       .send("User logged in");
   } catch (error) {
     res.status(500).send("¡Ups!... ❌ Algo salio mal ❌");
-    console.error(error);
+    console_log(error);
   }
 };
 

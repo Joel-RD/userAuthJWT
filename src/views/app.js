@@ -27,6 +27,18 @@ formSignUp.addEventListener("submit", async (e) => {
   const password2 = document.getElementById("password-2").value;
 
   try {
+    if (password !== password2) {
+      messageSignUn.innerHTML = "Passwords do not match";
+      messageSignUn.style.color = "red";
+
+      document.getElementById("password").value = "";
+      document.getElementById("password-2").value = "";
+      setTimeout(() => {
+        messageSignUn.innerHTML = "";
+      }, 2000);
+      return;
+    }
+
     const res = await fetch("/register", {
       method: "post",
       headers: {
@@ -36,19 +48,6 @@ formSignUp.addEventListener("submit", async (e) => {
     });
 
     const responseData = await res.text();
-
-    if (password !== password2) {
-      messageSignUn.innerHTML = "Passwords do not match";
-      messageSignUn.style.color = "red";
-
-      document.getElementById("userName").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("password").value = "";
-      document.getElementById("password-2").value = "";
-      setTimeout(() => {
-        messageSignUn.innerHTML = "";
-      }, 2000);
-    }
 
     if (!res.ok) {
       messageSignUn.innerHTML = responseData;
@@ -94,6 +93,18 @@ formSignIn.addEventListener("submit", async (e) => {
   let password2 = document.getElementById("login-password-2").value;
 
   try {
+    if (password !== password2) {
+      messageSignIn.innerHTML = "Passwords do not match";
+      messageSignIn.style.color = "red";
+
+      document.getElementById("login-password").value = "";
+      document.getElementById("login-password-2").value = "";
+      setTimeout(() => {
+        messageSignIn.innerHTML = "";
+      }, 2000);
+      return;
+    }
+
     const res = await fetch("/login", {
       method: "POST",
       headers: {
@@ -103,18 +114,6 @@ formSignIn.addEventListener("submit", async (e) => {
     });
 
     const responseData = await res.text();
-
-    if (password !== password2) {
-      messageSignIn.innerHTML = "Passwords do not match";
-      messageSignIn.style.color = "red";
-
-      document.getElementById("login-email").value = "";
-      document.getElementById("login-password").value = "";
-      document.getElementById("login-password-2").value = "";
-      setTimeout(() => {
-        messageSignIn.innerHTML = "";
-      }, 2000);
-    }
 
     if (!res.ok) {
       messageSignIn.innerHTML = responseData;

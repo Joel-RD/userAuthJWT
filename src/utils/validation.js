@@ -1,4 +1,7 @@
 import jwt from "jsonwebtoken";
+import {config} from "../../config.js";
+
+const {console_log } = config();
 
 export const validationData = {
   validateName: function (name) {
@@ -67,6 +70,6 @@ export const verifyToken = (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error(error);
+    console_log(error);
   }
 };

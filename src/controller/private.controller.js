@@ -2,7 +2,9 @@ import { Router } from "express";
 import { validationData } from "../utils/validation.js";
 import { executeQuery } from "../models/DB.js";
 import { hashgenerator, comparePassword } from "../utils/encrypt.js";
+import { config } from "../../config.js";
 
+const {console_log} = config();
 const router = Router();
 
 export const rootProtected = (req, res) => {
@@ -52,7 +54,7 @@ export const setConfig = async(req, res) => {
 
     res.send("Cambios guardados").status(200);
   } catch (error) {
-    console.log(error);
+    console_log(error);
     res.status(500).send("¡Ups!... ❌ Algo salio mal ❌");
   }
 };

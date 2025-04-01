@@ -1,18 +1,18 @@
 import pg from "pg";
+import { config } from "../../config.js";
 
 const { Pool } = pg;
 
-const { USER_DB, HOST_DB, DB, PASSWORD_DB, PORT_DB, CLOUD_DB } = process.env;
+const {console_log, URL_CONNECTION} = config();
 
  const DBConnection = async () => {
   try {
-    console.log('DB connected');
-    const url_conect = CLOUD_DB ? CLOUD_DB : `postgres://${USER_DB}:${PASSWORD_DB}@${HOST_DB}:${PORT_DB}/${DB}`
+    console_log('DB connected', URL_CONNECTION);
     return new Pool ({
-      connectionString: url_conect,
+      connectionString: URL_CONNECTION,
     })
   } catch (error) {
-    console.error(error)
+    console_log(error)
   }
 };
 
@@ -23,6 +23,6 @@ export const executeQuery = async (query, params = []) => {
     const results = pool.query(query, params); ;
     return (await results);
   } catch (error) {
-    console.error(error);
+    console_log(error);
   }
 };

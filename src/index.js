@@ -6,10 +6,11 @@ import logger from "morgan";
 import path from "node:path";
 import exphbs from "express-handlebars";
 import cookieParser from "cookie-parser";
+import { config } from "../config.js";
 
 const app = express();
 
-const PORT_SERVER = process.env.PORT_SERVER || 6352;
+const {PORT, console_log} = config();
 
 //Middlewares
 app.use(logger("dev"));
@@ -31,6 +32,6 @@ app.all("*", (req, res) => {
   res.redirect("/home");
 });
 
-app.listen(PORT_SERVER, () => {
-  console.log(`Server running on port http://localhost:${PORT_SERVER}/home`);
+app.listen(PORT, () => {
+  console_log(`Server running on port http://localhost:${PORT}/home`);
 });

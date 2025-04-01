@@ -535,3 +535,7 @@ form.sign-in-form {
 .config-button:hover {
   background-color: #0056b3;
 }
+
+#message-config {
+  align-items: center;
+}
